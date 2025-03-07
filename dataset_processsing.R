@@ -1,6 +1,6 @@
 library(tidyr)
 library(stringr)
-
+rm(list = ls())
 setwd("C:/Users/irmak/Desktop/datascience/lulzern/ML/ML1-HSLU")
 GEM<-read.csv("Global_Economic_monitor.csv")
 GEM<-na.omit(GEM)
@@ -21,7 +21,7 @@ df_long$country_name[df_long$country_name == "Slovak Republic"] <- "Slovakia"
 df_long$country_name[df_long$country_name == "Russian Federation"] <- "Russia"
 df_long$country_name[df_long$country_name == "Taiwan China"] <- "Taiwan"
 df_long$country_name[df_long$country_name == "United States"] <- "United States of America"
-"
+
 
 
 df_long[df_long == ".."] <- NA
@@ -49,3 +49,24 @@ new_data <- new_data %>%
 new_data <- new_data %>%
   filter(!is.na(`Stock Markets, US$,,,`))
 write.csv(new_data,"new_data2.csv")
+
+MS<-read.csv("military_spending_dataset.csv")
+MS_long <- MS %>%
+  pivot_longer(
+    cols = starts_with("X"),   # Select columns that start with 'X' followed by a year
+    names_to = "year",
+    values_to = "Military expenditure (% of GDP)",
+    values_drop_na=TRUE) 
+MS_long$year <- substr(MS_long$year, 2, 5)
+f <- MS_long %>% select(-"Indicator.Name")
+colnames(f)[colnames(f) == 'Country.Name'] <- 'country_name'
+f$year<-as.numeric(f$year)
+new_data3<-
+  f %>%
+  full_join(new_data, by = c("country_name","year")) 
+new_data3<-subset(new_data3, year >= 2000 & year<=2020)
+new_data3 <- new_data3 %>%
+  filter(!is.na(`CPI Price, % y-o-y, not seas. adj.,,`))
+new_data3 <- new_data3 %>%
+  filter(!is.na(`Stock Markets, US$,,,`))
+write.csv(new_data3,"merge_with_military.csv")
