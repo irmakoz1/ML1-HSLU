@@ -57,3 +57,45 @@ new_data3<-new_data3[ , !(names(new_data3) %in% drops1y)]
 
 
 new_data3<-subset(new_data3, Year >= 2000 & Year<=2020)
+GEM<-read.csv("raw_data/global_economy_indicators.csv")
+
+population<-read.csv("raw_data/World Population and Unemployment Dataset (1960-2023).csv")
+merged<-read.csv("processed_data/new_data_merged1.csv")
+
+colnames(population)[colnames(population) == "country"] <- "Country"
+colnames(population)[colnames(population) == "date"] <- "Year"
+keep<-c("Country","Year","Urban.population","Rural.population")
+population<-population[ , (names(population) %in% keep)]
+
+population<-na.omit(population)
+
+
+population<-subset(population, Year >= 1990 & Year<=2020)
+population <- population %>%
+  mutate(Country = trimws(Country, which = "right"))
+population <- population %>%
+  mutate(Country = trimws(Country, which = "left"))
+population$Country[population$Country == "Egypt Arab Rep."] <- "Egypt"
+population$Country[population$Country == "Korea Rep."] <- "South Korea"
+population$Country[population$Country == "Macedonia FYR"] <- "North Macedonia"
+population$Country[population$Country == "Slovak Republic"] <- "Slovakia"
+population$Country[population$Country == "Russian Federation"] <- "Russia"
+population$Country[population$Country == "Taiwan China"] <- "Taiwan"
+population$Country[population$Country == "United States"] <- "United States of America"
+population<- droplevels(population)
+new_data3<-
+  merged  %>%
+  full_join(population, by = c("Country","Year")) 
+colnames(new_data3)[colnames(new_data3) == "X.Agriculture..hunting..forestry..fishing..ISIC.A.B.."] <- "agriculture_and_hunting_fishing_isic"
+colnames(new_data3)[colnames(new_data3) == "Construction..ISIC.F."] <- "construction_isic"
+colnames(new_data3)[colnames(new_data3) == "X.Mining..Manufacturing..Utilities..ISIC.C.E.."] <- "mining_manifacturing_isic"
+colnames(new_data3)[colnames(new_data3) == "X.Wholesale..retail.trade..restaurants.and.hotels..ISIC.G.H.."] <- "wholesale_trade_restaurant_hotel_isic"
+colnames(new_data3)[colnames(new_data3) == "X.Transport..storage.and.communication..ISIC.I.."] <- "transport_storage_communication_isic"
+
+colnames(new_data3)
+
+ncol(new_data3)
+
+drops1y<-c("Total.Value.Added","Other.Activities..ISIC.J.P.","Manufacturing..ISIC.D.","Household.consumption.expenditure..including.Non.profit.institutions.serving.households.", "Gross.fixed.capital.formation..including.Acquisitions.less.disposals.of.valuables.", "General.government.final.consumption.expenditure", "AMA.exchange.rate","X", "Final.consumption.expenditure")
+new_data3<-new_data3[ , !(names(new_data3) %in% drops1y)]
+write.csv(new_data3,"new_data_with_count.csv")

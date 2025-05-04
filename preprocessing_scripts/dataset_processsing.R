@@ -1,8 +1,9 @@
 library(tidyr)
 library(stringr)
+library(dplyr)
 rm(list = ls())
 setwd("C:/Users/irmak/Desktop/datascience/lulzern/ML/ML1-HSLU")
-GEM<-read.csv("Global_Economic_monitor.csv")
+GEM<-read.csv("raw_data/global_economy_indicators.csv")
 GEM<-na.omit(GEM)
 f <- GEM %>% select(-"Series.Code")
 f$Series<-as.factor(f$Series)
@@ -39,32 +40,32 @@ pivot_wider(names_from =Series, values_from = Value)
 colnames(df_long)[colnames(df_long) == 'Country'] <- 'country_name'
 df_long$year <- substr(df_long$year, 2, 5)
 df_long$year<-as.integer(df_long$year)
-election<-read.csv("global_leader_ideologies.csv")
+election<-read.csv("raw_data/global_leader_ideologies.csv")
 new_data<-
   election %>%
   full_join(df_long, by = c("country_name","year"))  
-new_data<-subset(new_data, year >= 2000 & year<=2020)
+new_data<-subset(GEM, Year >= 2000 & Year<=2020)
 new_data <- new_data %>%
   filter(!is.na(`CPI Price, % y-o-y, not seas. adj.,,`))
 new_data <- new_data %>%
   filter(!is.na(`Stock Markets, US$,,,`))
 write.csv(new_data,"new_data2.csv")
 
-MS<-read.csv("military_spending_dataset.csv")
+MS<-read.csv("raw_data/military_spending_dataset.csv")
 MS_long <- MS %>%
   pivot_longer(
     cols = starts_with("X"),   # Select columns that start with 'X' followed by a year
-    names_to = "year",
+    names_to = "Year",
     values_to = "Military expenditure (% of GDP)",
     values_drop_na=TRUE) 
-MS_long$year <- substr(MS_long$year, 2, 5)
+MS_long$Year <- substr(MS_long$Year, 2, 5)
 f <- MS_long %>% select(-"Indicator.Name")
-colnames(f)[colnames(f) == 'Country.Name'] <- 'country_name'
-f$year<-as.numeric(f$year)
+colnames(f)[colnames(f) == 'Country.Name'] <- 'Country'
+f$Year<-as.numeric(f$Year)
 new_data3<-
-  f %>%
-  full_join(new_data, by = c("country_name","year")) 
-new_data3<-subset(new_data3, year >= 2000 & year<=2020)
+  new_data %>%
+  full_join(f, by = c("Country","Year")) 
+new_data3<-subset(new_data3, Year >= 2000 & Year<=2020)
 new_data3 <- new_data3 %>%
   filter(!is.na(`CPI Price, % y-o-y, not seas. adj.,,`))
 new_data3 <- new_data3 %>%
