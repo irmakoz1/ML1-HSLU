@@ -57,10 +57,13 @@ new_data3<-new_data3[ , !(names(new_data3) %in% drops1y)]
 
 
 new_data3<-subset(new_data3, Year >= 2000 & Year<=2020)
+
+
+
+
 GEM<-read.csv("raw_data/global_economy_indicators.csv")
 
 population<-read.csv("raw_data/World Population and Unemployment Dataset (1960-2023).csv")
-merged<-read.csv("processed_data/new_data_merged1.csv")
 
 colnames(population)[colnames(population) == "country"] <- "Country"
 colnames(population)[colnames(population) == "date"] <- "Year"
@@ -84,7 +87,7 @@ population$Country[population$Country == "Taiwan China"] <- "Taiwan"
 population$Country[population$Country == "United States"] <- "United States of America"
 population<- droplevels(population)
 new_data3<-
-  merged  %>%
+  elecions  %>%
   full_join(population, by = c("Country","Year")) 
 colnames(new_data3)[colnames(new_data3) == "X.Agriculture..hunting..forestry..fishing..ISIC.A.B.."] <- "agriculture_and_hunting_fishing_isic"
 colnames(new_data3)[colnames(new_data3) == "Construction..ISIC.F."] <- "construction_isic"
@@ -99,3 +102,9 @@ ncol(new_data3)
 drops1y<-c("Total.Value.Added","Other.Activities..ISIC.J.P.","Manufacturing..ISIC.D.","Household.consumption.expenditure..including.Non.profit.institutions.serving.households.", "Gross.fixed.capital.formation..including.Acquisitions.less.disposals.of.valuables.", "General.government.final.consumption.expenditure", "AMA.exchange.rate","X", "Final.consumption.expenditure")
 new_data3<-new_data3[ , !(names(new_data3) %in% drops1y)]
 write.csv(new_data3,"new_data_with_count.csv")
+new<-read.csv("new_data_with_count.csv")
+ncol(new)
+as.factor(new$Country)
+nrow(new)
+colnames(new)
+new<-na.omit(new)
