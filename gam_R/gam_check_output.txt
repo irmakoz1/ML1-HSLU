@@ -1,0 +1,22 @@
+
+Method: REML   Optimizer: outer newton
+full convergence after 10 iterations.
+Gradient range [-8.270886e-07,5.125792e-07]
+(score 733.2626 & scale 0.09972408).
+Hessian positive definite, eigenvalue range [1.3118,1135.078].
+Model rank =  76 / 76 
+
+Basis dimension (k) checking results. Low p-value (k-index<1) may
+indicate that k is too low, especially if edf is close to k'.
+
+                                          k'  edf k-index p-value   
+s(Per_capita_GNI)                       9.00 8.53    0.99   0.370   
+s(agriculture_and_hunting_fishing_isic) 9.00 7.83    0.99   0.250   
+s(construction_isic)                    9.00 6.33    1.00   0.485   
+s(Imports_of_goods_and_services)        9.00 6.62    0.97   0.075 . 
+s(mining_manifacturing_isic)            9.00 7.99    0.99   0.320   
+s(transport_storage_communication_isic) 9.00 7.44    0.96   0.010 **
+s(GDP)                                  9.00 7.92    0.99   0.210   
+s(Urban_population_log)                 9.00 8.14    0.93   0.005 **
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1

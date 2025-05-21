@@ -1,0 +1,35 @@
+
+Family: gaussian 
+Link function: identity 
+
+Formula:
+y_train ~ s(Per_capita_GNI) + s(agriculture_and_hunting_fishing_isic) + 
+    s(construction_isic) + s(Imports_of_goods_and_services) + 
+    s(mining_manifacturing_isic) + s(transport_storage_communication_isic) + 
+    s(GDP) + s(Urban_population_log) + leader_ideology_rightist + 
+    democracy_True + leader_ideology_leftist
+
+Parametric coefficients:
+                          Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                1.12281    0.02653  42.316   <2e-16 ***
+leader_ideology_rightist1 -0.00769    0.02574  -0.299   0.7651    
+democracy_True1           -0.19956    0.01850 -10.787   <2e-16 ***
+leader_ideology_leftist1  -0.04589    0.02590  -1.772   0.0766 .  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Approximate significance of smooth terms:
+                                          edf Ref.df      F  p-value    
+s(Per_capita_GNI)                       8.530  8.931 13.042  < 2e-16 ***
+s(agriculture_and_hunting_fishing_isic) 7.827  8.613 15.209  < 2e-16 ***
+s(construction_isic)                    6.327  7.601  3.549 0.000427 ***
+s(Imports_of_goods_and_services)        6.615  7.831 15.521  < 2e-16 ***
+s(mining_manifacturing_isic)            7.994  8.670 12.826  < 2e-16 ***
+s(transport_storage_communication_isic) 7.438  8.253 14.579  < 2e-16 ***
+s(GDP)                                  7.924  8.493  9.025  < 2e-16 ***
+s(Urban_population_log)                 8.140  8.717 16.371  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+R-sq.(adj) =  0.347   Deviance explained = 36.6%
+-REML = 733.26  Scale est. = 0.099724  n = 2282
