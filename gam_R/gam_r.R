@@ -2,12 +2,15 @@ library(mgcv)
 library(ggplot2)
 library(ggplotify)
 library(cowplot)
+library(bestNormalize)
+library(bestglm)
+
 setwd("C:/Users/irmak/Desktop/datascience/lulzern/ML/ML1-HSLU")
 # Load data
-X <- read.csv("X_enc.csv")
-y <- read.csv("y_train_enc.csv")[,1]  
-X_test <- read.csv("x_test_enc.csv")
-y_test<- read.csv("y_test_enc.csv")
+X <- read.csv("gam_R/X_enc.csv")
+y <- read.csv("gam_R/y_train_enc.csv")[,1]  
+X_test <- read.csv("gam_R/x_test_enc.csv")
+y_test<- read.csv("gam_R/y_test_enc.csv")
 
 # Combine into a single dataframe
 df <- cbind(X, y_train = y)
@@ -66,21 +69,34 @@ hist(residuals,
      xlab = "Residuals", 
      ylab = "Frequency")
 
-
-# Extract plots into a list
 plots <- list()
-n_terms <- length(model$smooth)
+n_terms <- length(model$smooth)  # or however you get number of terms
+term_names <- attr(model$terms, "term.labels")
 
 for (i in 1:n_terms) {
+  # create the plot for term i
   p <- as.ggplot(~plot(model, select = i, residuals = TRUE, cex = 2))
+
+  # modify the plot to rotate x-axis labels and add margin
+  p <- p +     
+    ggtitle(term_names[i]) +     # add title with variable name
+    theme(
+      plot.title = element_text(hjust = 0.5, size = 8, face = "bold"),  # center & style
+      axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+      axis.text.y = element_text(angle = 45, hjust = 1, size = 8),
+      plot.margin = margin(t = 10, r = 10, b = 30, l = 40)
+    )
+  
   plots[[i]] <- p
 }
 
-# Combine into a grid
-grid_plot <- plot_grid(plotlist = plots, ncol = 3)  # Adjust ncol as needed
+# combine and save
+grid_plot <- plot_grid(plotlist = plots, ncol = 3)
+print(grid_plot)
+
 
 # Save as PNG or PDF
-ggsave("gam_grid_plots.png", grid_plot, width = 16, height = 12, dpi = 300)
+ggsave("gam_grid_plots.png", grid_plot, width = 18, height = 15, dpi = 300)
 
 
 summary(model)
@@ -110,18 +126,72 @@ sink()
 png("gam_residual_diagnostics.png", width = 800, height = 400)
 par(mfrow = c(1, 2))
 
-# new_data is a data frame with the same predictors (x1, x2)
 predictions <- predict(model, newdata = X_test, type = "response")
 
 rmse <- sqrt(mean((y_test$military_expenditure - predictions)^2))
 print(rmse)
+mean_actual <- mean(y_test$military_expenditure)
+relative_rmse_percent <- (rmse / mean_actual) * 100
+print(paste("Relative RMSE (%):", round(relative_rmse_percent, 2)))
+
+print(mean_actual)
+relative_rmse <- 32.91  
+rmse_units <- relative_rmse * mean_actual / 100
+print(rmse_units)
 
 
-any(is.na(y_test))
-any(is.na(predictions))
 
-any(is.nan(y_test))
-any(is.nan(predictions))
+#YEOJOHNSON TRANSFORMATION
+yj_obj <- yeojohnson(df$y_train)
+
+model <- gam(
+  yj_obj$x.t ~ 
+    s(Per_capita_GNI) +
+    s(agriculture_and_hunting_fishing_isic) +
+    s(construction_isic) +
+    s(Imports_of_goods_and_services) +
+    s(mining_manifacturing_isic) +
+    s(transport_storage_communication_isic) +
+    s(GDP) +
+    s(Urban_population_log) +
+    leader_ideology_rightist +
+    democracy_True +
+    leader_ideology_leftist,
+  data = df,
+  method = "REML") 
+
+summary(model)
+
+sink("YEOJOHNSON_model_summary.txt")
+summary(model)
+sink()
+
+# Save gam.check output
+sink("YEOJOHNSON_check_output.txt")
+gam.check(model)
+sink()
+
+# Transform y_train
+predictions_transformed <- predict(model, newdata = X_test)
+predictions <- exp(predictions_transformed) - 1  
+predictions<-as.numeric(predictions)
+predictions_original <- predict(yj_obj, newdata = predictions_transformed, inverse = TRUE)
+
+rmse <- sqrt(mean((y_test$military_expenditure - predictions_original)^2))
+print(rmse)
+par(mfrow = c(1, 2))
+
+# Residuals vs Fitted
+plot(model$fitted.values, residuals(model, type = "deviance"),
+     xlab = "Fitted values", ylab = "Deviance residuals",
+     main = "Residuals vs Fitted")
+abline(h = 0, col = "red", lty = 2)
+
+# QQ Plot
+qqnorm(residuals(model, type = "deviance"))
+qqline(residuals(model, type = "deviance"), col = "blue")
+
+
 
 dev.off()
 
