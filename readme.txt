@@ -10,6 +10,7 @@ The folder structure is the following:
 	/processed_data
 	/raw_data
 	/gam_R
+	/template
 
 
 -The file ML1_Report.html is the main report file.
@@ -24,6 +25,8 @@ The folder structure is the following:
 -Raw data contains 4 datasets before preprocessing with the metadata file for global economic indicators dataset.
 
 -GAM R folder contains, train-test split data from python, R scripts for GAM analysis, related plots and summary tables. 
+
+-Template folder contains hide_code utility for jupyter notebook.
 
 -------------------------------------------------------
 --------------     Team Contributions   --------------

@@ -1,0 +1,1 @@
+jupyter nbconvert ML1-Project_TeamDraft_v2.ipynb --to html --output out.html --TagRemovePreprocessor.enabled=True --TagRemovePreprocessor.remove_input_tags="['hide_code']" --template classic
