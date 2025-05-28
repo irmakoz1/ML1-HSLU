@@ -18,12 +18,39 @@ This repository contains the analysis conducted for the ML1 course at HSLU. The 
 **The folder structure:**
 
 
-/ML1_report
-	/preprocessing_scripts
-	/processed_data
-	/raw_data
-	/gam_R
-	/template
+📦ML1_report
+ ┣ 📂gam_R
+ ┃ ┣ 📜gam_check_output.txt
+ ┃ ┣ 📜gam_model_summary.txt
+ ┃ ┣ 📜gam_r.R
+ ┃ ┣ 📜grid_plot.png
+ ┃ ┣ 📜RESIDUAL_DIAG.png
+ ┃ ┣ 📜X_enc.csv
+ ┃ ┣ 📜x_test_enc.csv
+ ┃ ┣ 📜YEOJOHNSONTRANSFORMED.png
+ ┃ ┣ 📜YEOJOHNSON_check_output.txt
+ ┃ ┣ 📜yeojohnson_histogram.png
+ ┃ ┣ 📜YEOJOHNSON_model_summary.txt
+ ┃ ┣ 📜yeojohnson_qqplot.png
+ ┃ ┣ 📜y_test_enc.csv
+ ┃ ┗ 📜y_train_enc.csv
+ ┣ 📂preprocessing_scripts
+ ┃ ┣ 📜dataset_processsing.R
+ ┃ ┗ 📜new_data_merge.R
+ ┣ 📂processed_data
+ ┃ ┗ 📜new_data_with_count.csv
+ ┣ 📂raw_data
+ ┃ ┣ 📜GEM_Metadatadescriptions.xlsx
+ ┃ ┣ 📜global_economy_indicators.csv
+ ┃ ┣ 📜global_leader_ideologies.csv
+ ┃ ┣ 📜military_spending_dataset.csv
+ ┃ ┗ 📜World Population and Unemployment Dataset (1960-2023).csv
+ ┣ 📂template
+ ┃ ┣ 📜convert_html.txt
+ ┃ ┗ 📜hide_code.tpl
+ ┣ 📜ML1_Project.html
+ ┣ 📜ML1_Report.ipynb
+ ┗ 📜README.md
 
 
 -The file ML1_Project.html is the main report file.
