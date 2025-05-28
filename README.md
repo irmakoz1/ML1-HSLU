@@ -11,7 +11,8 @@ This repository contains the analysis conducted for the ML1 course at HSLU. The 
 
 - Support Vector Machines (SVMs)
 
-The goal of the analysis is to uncover interpretable patterns and predictive insights connecting economic and ideological factors.
+**The goal of the analysis is to uncover interpretable patterns and predictive insights connecting economic and ideological factors.**
+
 -----------------------------------------------------------------------------------------------------------------------------------------------
 
 **The folder structure:**
@@ -19,13 +20,13 @@ The goal of the analysis is to uncover interpretable patterns and predictive ins
 /ML1_report
 
 	/preprocessing_scripts
- 
+
 	/processed_data
- 
+
 	/raw_data
- 
+
 	/gam_R
- 
+
 	/template
 
 
@@ -47,23 +48,25 @@ The goal of the analysis is to uncover interpretable patterns and predictive ins
 **Team Contibutions:**
 This project was a collaborative effort where each member contributed their expertise to different stages of the workflow:
 
-- **Data Selection & Cleaning:**  
+- **Data Selection & Cleaning:**
   Özarslan Irmak was responsible for selecting the macroeconomic and political datasets and performed comprehensive data cleaning to ensure the dataset was reliable for analysis.
 
-- **Exploratory Data Analysis (EDA):** 
+- **Exploratory Data Analysis (EDA):**
   Batschelet Jimena conducted the exploratory data analysis, uncovering important trends, distributions, and relationships that informed subsequent modeling decisions.
 
-- **Modeling:**  
+- **Modeling:**
     - Generalized Additive Model (GAM) and Poisson Model: Özarslan Irmak implemented and tuned the GAM and Poisson models.
     - Neural Networks & Binomial Model: Chichko Kostiantyn developed the neural network models and performed the Binomial model analysis.
     - Linear Regression & SVM: Batschelet Jimena was responsible for implementing the linear regression and support vector machine models.
 
-- **Shared Responsibilities:**  
+- **Shared Responsibilities:**
   All team members collaborated on project planning, coordination, result interpretation, report writing, and presentation preparation. Peer review and feedback were integral at every stage, ensuring high-quality and reproducible results.
 
-**Team Members:**  
-- Batschelet Jimena W.MSCIDS.2201 (<jimena.batschelet@stud.hslu.ch>)  
-- Özarslan Irmak W.MSCIDS.2401 (<irmak.oezarslan@stud.hslu.ch>)  
+-  **github:** https://github.com/irmakoz1/ML1-HSLU
+
+**Team Members:**
+- Batschelet Jimena W.MSCIDS.2201 (<jimena.batschelet@stud.hslu.ch>)
+- Özarslan Irmak W.MSCIDS.2401 (<irmak.oezarslan@stud.hslu.ch>)
 - Chichko Kostiantyn W.MSCIDS.2401 (<kostiantyn.chichko@stud.hslu.ch>)
 
 
