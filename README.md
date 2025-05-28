@@ -13,14 +13,20 @@ This repository contains the analysis conducted for the ML1 course at HSLU. The 
 
 The goal of the analysis is to uncover interpretable patterns and predictive insights connecting economic and ideological factors.
 -----------------------------------------------------------------------------------------------------------------------------------------------
-*The folder structure is the following:*
 
-**/ML1_report
+**The folder structure:**
+
+/ML1_report
+
 	/preprocessing_scripts
+ 
 	/processed_data
+ 
 	/raw_data
+ 
 	/gam_R
-	/template**
+ 
+	/template
 
 
 -The file ML1_Project.html is the main report file.
