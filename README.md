@@ -18,7 +18,7 @@ This repository contains the analysis conducted for the ML1 course at HSLU. The 
 **The folder structure:**
 
 
-📦ML1_report
+<pre> 📦ML1_report
  ┣ 📂gam_R
  ┃ ┣ 📜gam_check_output.txt
  ┃ ┣ 📜gam_model_summary.txt
@@ -50,7 +50,7 @@ This repository contains the analysis conducted for the ML1 course at HSLU. The 
  ┃ ┗ 📜hide_code.tpl
  ┣ 📜ML1_Project.html
  ┣ 📜ML1_Report.ipynb
- ┗ 📜README.md
+ ┗ 📜README.md </pre>
 
 
 -The file ML1_Project.html is the main report file.
