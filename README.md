@@ -17,6 +17,7 @@ This repository contains the analysis conducted for the ML1 course at HSLU. The 
 
 **The folder structure:**
 
+
 /ML1_report
 
 	/preprocessing_scripts
@@ -38,7 +39,7 @@ This repository contains the analysis conducted for the ML1 course at HSLU. The 
 
 -Processed data folder contains the processed data file (new_data_with_count.csv) that we used in our analysis.
 
--Raw data contains 4 datasets (global_economy_indicators, global_leader_ideologies,military_spending_dataset,World POpulation and Unemployment Dataset) before preprocessing and the metadata file for global economic indicators dataset.
+-Raw data contains 4 datasets (global_economy_indicators, global_leader_ideologies,military_spending_dataset,World Population and Unemployment Dataset) before preprocessing and the metadata file for global economic indicators dataset.
 
 -gam_R folder contains, train-test data split from python (X_enc.csv,x_test_enc.csv,y_train_enc.csv,y_test_enc.csv) for loading in R, R script for GAM analysis (gam_r.R) and related plots and summary tables to load in jupyter notebook.
 
