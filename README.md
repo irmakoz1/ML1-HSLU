@@ -19,15 +19,10 @@ This repository contains the analysis conducted for the ML1 course at HSLU. The 
 
 
 /ML1_report
-
 	/preprocessing_scripts
-
 	/processed_data
-
 	/raw_data
-
 	/gam_R
-
 	/template
 
 
