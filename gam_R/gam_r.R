@@ -6,9 +6,9 @@ library(bestNormalize)
 library(bestglm)
 
 setwd("C:/Users/irmak/Desktop/datascience/lulzern/ML/ML1-HSLU")
-# Load data
+
 X <- read.csv("gam_R/X_enc.csv")
-y <- read.csv("gam_R/y_train_enc.csv")[,1]  
+y <- read.csv("gam_R/y_train_enc.csv")[,1]
 X_test <- read.csv("gam_R/x_test_enc.csv")
 y_test<- read.csv("gam_R/y_test_enc.csv")
 
@@ -28,7 +28,7 @@ library(ggplot2)
 
 
 model <- gam(
-  y_train ~ 
+  y_train ~
     s(Per_capita_GNI) +
     s(agriculture_and_hunting_fishing_isic) +
     s(construction_isic) +
@@ -41,10 +41,10 @@ model <- gam(
     democracy_True +
     leader_ideology_leftist,
   data = df,
-  method = "REML") 
+  method = "REML")
 
 #BAM doesnt help with right skewness of residuals as well...
-model <- bam(y_train ~ 
+model <- bam(y_train ~
                s(Per_capita_GNI) +
                s(agriculture_and_hunting_fishing_isic) +
                s(construction_isic) +
@@ -61,16 +61,16 @@ model <- bam(y_train ~
 residuals <- residuals(model)
 
 # Plot the histogram of the residuals
-hist(residuals, 
-     breaks = 40, 
-     col = "lightblue", 
-     border = "black", 
-     main = "Histogram of Deviance Residuals", 
-     xlab = "Residuals", 
+hist(residuals,
+     breaks = 40,
+     col = "lightblue",
+     border = "black",
+     main = "Histogram of Deviance Residuals",
+     xlab = "Residuals",
      ylab = "Frequency")
 
 plots <- list()
-n_terms <- length(model$smooth)  # or however you get number of terms
+n_terms <- length(model$smooth)
 term_names <- attr(model$terms, "term.labels")
 
 for (i in 1:n_terms) {
@@ -78,7 +78,7 @@ for (i in 1:n_terms) {
   p <- as.ggplot(~plot(model, select = i, residuals = TRUE, cex = 2))
 
   # modify the plot to rotate x-axis labels and add margin
-  p <- p +     
+  p <- p +
     ggtitle(term_names[i]) +     # add title with variable name
     theme(
       plot.title = element_text(hjust = 0.5, size = 8, face = "bold"),  # center & style
@@ -86,7 +86,7 @@ for (i in 1:n_terms) {
       axis.text.y = element_text(angle = 45, hjust = 1, size = 8),
       plot.margin = margin(t = 10, r = 10, b = 30, l = 40)
     )
-  
+
   plots[[i]] <- p
 }
 
@@ -135,7 +135,7 @@ relative_rmse_percent <- (rmse / mean_actual) * 100
 print(paste("Relative RMSE (%):", round(relative_rmse_percent, 2)))
 
 print(mean_actual)
-relative_rmse <- 32.91  
+relative_rmse <- 32.91
 rmse_units <- relative_rmse * mean_actual / 100
 print(rmse_units)
 
@@ -145,7 +145,7 @@ print(rmse_units)
 yj_obj <- yeojohnson(df$y_train)
 
 model <- gam(
-  yj_obj$x.t ~ 
+  yj_obj$x.t ~
     s(Per_capita_GNI) +
     s(agriculture_and_hunting_fishing_isic) +
     s(construction_isic) +
@@ -158,7 +158,7 @@ model <- gam(
     democracy_True +
     leader_ideology_leftist,
   data = df,
-  method = "REML") 
+  method = "REML")
 
 summary(model)
 
@@ -173,7 +173,7 @@ sink()
 
 # Transform y_train
 predictions_transformed <- predict(model, newdata = X_test)
-predictions <- exp(predictions_transformed) - 1  
+predictions <- exp(predictions_transformed) - 1
 predictions<-as.numeric(predictions)
 predictions_original <- predict(yj_obj, newdata = predictions_transformed, inverse = TRUE)
 

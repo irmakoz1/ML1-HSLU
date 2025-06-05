@@ -1,83 +1,93 @@
+# Clear workspace
 rm(list = ls())
 
-
-
+# Load required libraries
 library(tidyr)
 library(stringr)
 library(dplyr)
-setwd("C:/Users/irmak/Desktop/datascience/lulzern/ML/ML1-HSLU")
-GEM<-read.csv("raw_data/global_economy_indicators.csv")
-GEM<-na.omit(GEM)
 
-election<-read.csv("raw_data/global_leader_ideologies.csv")
+# Set working directory
+setwd("C:/Users/irmak/Desktop/datascience/lulzern/ML/ML1-HSLU")
+
+# ------------------------------
+# 1. Load and Clean Global Economy Indicators
+# ------------------------------
+GEM <- read.csv("raw_data/global_economy_indicators.csv") %>%
+  na.omit() %>%
+  subset(Year >= 1990 & Year <= 2020) %>%
+  select(-CountryID) %>%
+  mutate(Country = str_trim(Country, side = "both"))
+
+# Rename country names
+GEM$Country[GEM$Country == "Egypt Arab Rep."] <- "Egypt"
+GEM$Country[GEM$Country == "Korea Rep."] <- "South Korea"
+GEM$Country[GEM$Country == "Macedonia FYR"] <- "North Macedonia"
+GEM$Country[GEM$Country == "Slovak Republic"] <- "Slovakia"
+GEM$Country[GEM$Country == "Russian Federation"] <- "Russia"
+GEM$Country[GEM$Country == "Taiwan China"] <- "Taiwan"
+GEM$Country[GEM$Country == "United States"] <- "United States of America"
+
+# ------------------------------
+# 2. Load and Clean Election Data
+# ------------------------------
+election <- read.csv("raw_data/global_leader_ideologies.csv")
 colnames(election)[colnames(election) == "country_name"] <- "Country"
 colnames(election)[colnames(election) == "year"] <- "Year"
-elections<-subset(election, Year >= 1990 & Year<=2020)
+elections <- subset(election, Year >= 1990 & Year <= 2020)
 
- 
-gem_data<-subset(GEM, Year >= 1990 & Year<=2020)
-gem_data <- gem_data %>% select(-"CountryID")
-gem_data <- gem_data %>%
-  mutate(Country = trimws(Country, which = "right"))
-gem_data <- gem_data %>%
-  mutate(Country = trimws(Country, which = "left"))
-gem_data$Country[gem_data$Country == "Egypt Arab Rep."] <- "Egypt"
-gem_data$Country[gem_data$Country == "Korea Rep."] <- "South Korea"
-gem_data$Country[gem_data$Country == "Macedonia FYR"] <- "North Macedonia"
-gem_data$Country[gem_data$Country == "Slovak Republic"] <- "Slovakia"
-gem_data$Country[gem_data$Country == "Russian Federation"] <- "Russia"
-gem_data$Country[gem_data$Country == "Taiwan China"] <- "Taiwan"
-gem_data$Country[gem_data$Country == "United States"] <- "United States of America"
+# Merge election and GEM data
+merged_data <- full_join(elections, GEM, by = c("Country", "Year"))
 
-elecions<-
-  elections %>%
-  full_join(gem_data, by = c("Country","Year")) 
+# ------------------------------
+# 3. Load and Clean Military Spending Data
+# ------------------------------
+MS <- read.csv("raw_data/military_spending_dataset.csv")
 
-MS<-read.csv("raw_data/military_spending_dataset.csv")
 MS_long <- MS %>%
-  pivot_longer(
-    cols = starts_with("X"),   # Select columns that start with 'X' followed by a year
-    names_to = "Year",
-    values_to = "Military expenditure (% of GDP)",
-    values_drop_na=TRUE) 
-MS_long$Year <- substr(MS_long$Year, 2, 5)
-MS_long$Year<-as.numeric(MS_long$Year)
+  pivot_longer(cols = starts_with("X"),
+               names_to = "Year",
+               values_to = "Military expenditure (% of GDP)",
+               values_drop_na = TRUE) %>%
+  mutate(Year = as.numeric(substr(Year, 2, 5))) %>%
+  select(-Country.Code, -Indicator.Code) %>%
+  rename(Country = Country.Name)
 
-MS_long <- MS_long %>% select(c(-"Country.Code",-"Indicator.Code"))
-colnames(MS_long)[colnames(MS_long) == "Country.Name"] <- "Country"
-new_data3<-
-  elecions %>%
-  full_join(MS_long, by = c("Country","Year")) 
-new_data3 <- new_data3 %>%
-  filter(!is.na("Currency"))
-new_data3<-na.omit(new_data3)
-drops1y<-c("hog_ideology_num_full","hog_ideology_num_redux","leader_party_abbr","hog_title", "hog_party_id", "hog_party_abbr", "Indicator.Name","leader", "hog_party","hog","hog_right" ,"country_code_cow","hog_ideomiss","hog_party_eng","hog_left", "hog_center","hog_noideo","hog_noinfo","leader_party","leader_party_eng","leader_party_id","leader_position","leader_ideomiss","match_hog_hog_bls","leader_ideology_num_full", "leader_ideology_num_redux","leader_right","leader_left","leader_center","leader_noideo","leader_noinfo","match_hog_leader_m","match_leader_leader_m","match_hog_leader_chi","match_leader_leader_chi","hog_ideology_bls", "match_leader_hog_bls","leader_ideology_m","execrlc_dpi","hog_party_lr_ord_vdem")
-new_data3<-new_data3[ , !(names(new_data3) %in% drops1y)]
+# Merge with previous data
+merged_data <- full_join(merged_data, MS_long, by = c("Country", "Year"))
 
+# Filter out NA in Currency column and remove remaining NAs
+merged_data <- merged_data %>%
+  filter(!is.na(Currency)) %>%
+  na.omit()
 
+# Drop irrelevant columns
+drops1 <- c("hog_ideology_num_full","hog_ideology_num_redux","leader_party_abbr","hog_title",
+            "hog_party_id", "hog_party_abbr", "Indicator.Name","leader", "hog_party","hog",
+            "hog_right", "country_code_cow","hog_ideomiss","hog_party_eng","hog_left",
+            "hog_center","hog_noideo","hog_noinfo","leader_party","leader_party_eng",
+            "leader_party_id","leader_position","leader_ideomiss","match_hog_hog_bls",
+            "leader_ideology_num_full", "leader_ideology_num_redux","leader_right","leader_left",
+            "leader_center","leader_noideo","leader_noinfo","match_hog_leader_m",
+            "match_leader_leader_m","match_hog_leader_chi","match_leader_leader_chi",
+            "hog_ideology_bls", "match_leader_hog_bls","leader_ideology_m","execrlc_dpi",
+            "hog_party_lr_ord_vdem")
 
-new_data3<-subset(new_data3, Year >= 2000 & Year<=2020)
+merged_data <- merged_data[ , !(names(merged_data) %in% drops1)]
+merged_data <- subset(merged_data, Year >= 2000 & Year <= 2020)
 
+# ------------------------------
+# 4. Load and Clean Population Data
+# ------------------------------
+population <- read.csv("raw_data/World Population and Unemployment Dataset (1960-2023).csv")
 
-
-
-GEM<-read.csv("raw_data/global_economy_indicators.csv")
-
-population<-read.csv("raw_data/World Population and Unemployment Dataset (1960-2023).csv")
-
-colnames(population)[colnames(population) == "country"] <- "Country"
-colnames(population)[colnames(population) == "date"] <- "Year"
-keep<-c("Country","Year","Urban.population","Rural.population")
-population<-population[ , (names(population) %in% keep)]
-
-population<-na.omit(population)
-
-
-population<-subset(population, Year >= 1990 & Year<=2020)
 population <- population %>%
-  mutate(Country = trimws(Country, which = "right"))
-population <- population %>%
-  mutate(Country = trimws(Country, which = "left"))
+  rename(Country = country, Year = date) %>%
+  select(Country, Year, Urban.population, Rural.population) %>%
+  na.omit() %>%
+  subset(Year >= 1990 & Year <= 2020) %>%
+  mutate(Country = str_trim(Country, side = "both"))
+
+# Rename country names
 population$Country[population$Country == "Egypt Arab Rep."] <- "Egypt"
 population$Country[population$Country == "Korea Rep."] <- "South Korea"
 population$Country[population$Country == "Macedonia FYR"] <- "North Macedonia"
@@ -85,26 +95,46 @@ population$Country[population$Country == "Slovak Republic"] <- "Slovakia"
 population$Country[population$Country == "Russian Federation"] <- "Russia"
 population$Country[population$Country == "Taiwan China"] <- "Taiwan"
 population$Country[population$Country == "United States"] <- "United States of America"
-population<- droplevels(population)
-new_data3<-
-  elecions  %>%
-  full_join(population, by = c("Country","Year")) 
-colnames(new_data3)[colnames(new_data3) == "X.Agriculture..hunting..forestry..fishing..ISIC.A.B.."] <- "agriculture_and_hunting_fishing_isic"
-colnames(new_data3)[colnames(new_data3) == "Construction..ISIC.F."] <- "construction_isic"
-colnames(new_data3)[colnames(new_data3) == "X.Mining..Manufacturing..Utilities..ISIC.C.E.."] <- "mining_manifacturing_isic"
-colnames(new_data3)[colnames(new_data3) == "X.Wholesale..retail.trade..restaurants.and.hotels..ISIC.G.H.."] <- "wholesale_trade_restaurant_hotel_isic"
-colnames(new_data3)[colnames(new_data3) == "X.Transport..storage.and.communication..ISIC.I.."] <- "transport_storage_communication_isic"
 
-colnames(new_data3)
+# Merge with existing dataset
+merged_data <- full_join(merged_data, population, by = c("Country", "Year"))
 
-ncol(new_data3)
+# ------------------------------
+# 5. Rename Long Variable Names
+# ------------------------------
+rename_columns <- c(
+  "X.Agriculture..hunting..forestry..fishing..ISIC.A.B.." = "agriculture_and_hunting_fishing_isic",
+  "Construction..ISIC.F." = "construction_isic",
+  "X.Mining..Manufacturing..Utilities..ISIC.C.E.." = "mining_manifacturing_isic",
+  "X.Wholesale..retail.trade..restaurants.and.hotels..ISIC.G.H.." = "wholesale_trade_restaurant_hotel_isic",
+  "X.Transport..storage.and.communication..ISIC.I.." = "transport_storage_communication_isic"
+)
+colnames(merged_data) <- recode(colnames(merged_data), !!!rename_columns)
 
-drops1y<-c("Total.Value.Added","Other.Activities..ISIC.J.P.","Manufacturing..ISIC.D.","Household.consumption.expenditure..including.Non.profit.institutions.serving.households.", "Gross.fixed.capital.formation..including.Acquisitions.less.disposals.of.valuables.", "General.government.final.consumption.expenditure", "AMA.exchange.rate","X", "Final.consumption.expenditure")
-new_data3<-new_data3[ , !(names(new_data3) %in% drops1y)]
-write.csv(new_data3,"new_data_with_count.csv")
-new<-read.csv("new_data_with_count.csv")
-ncol(new)
-as.factor(new$Country)
-nrow(new)
-colnames(new)
-new<-na.omit(new)
+# ------------------------------
+# 6. Drop Additional Unwanted Columns
+# ------------------------------
+drops2 <- c("Total.Value.Added","Other.Activities..ISIC.J.P.","Manufacturing..ISIC.D.",
+            "Household.consumption.expenditure..including.Non.profit.institutions.serving.households.",
+            "Gross.fixed.capital.formation..including.Acquisitions.less.disposals.of.valuables.",
+            "General.government.final.consumption.expenditure", "AMA.exchange.rate",
+            "X", "Final.consumption.expenditure")
+
+merged_data <- merged_data[ , !(names(merged_data) %in% drops2)]
+
+# ------------------------------
+# 7. Export Cleaned Dataset
+# ------------------------------
+write.csv(merged_data, "new_data_with_count.csv", row.names = FALSE)
+
+# ------------------------------
+# 8. Reload and Finalize Dataset
+# ------------------------------
+final_data <- read.csv("new_data_with_count.csv") %>%
+  na.omit()
+
+# Final Checks
+print(ncol(final_data))
+print(nrow(final_data))
+print(colnames(final_data))
+print(as.factor(final_data$Country))
