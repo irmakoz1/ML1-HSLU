@@ -56,8 +56,7 @@ This repository contains the analysis conducted for the ML1 course at HSLU. The 
 
 -The file ML1_Report.ipnyb is the markdown file used to generate the HTML output.
 
--Preprocessing scripts folder contains 2 files, dataset_processing.R cleans and merges 3 datasets in one and new_data_merge merges the last dataset with others.
-
+-Preprocessing scripts folder contains new_data_merge.R that merges all 4 datasets and renames and cleans them.
 -Processed data folder contains the processed data file (new_data_with_count.csv) that we used in our analysis.
 
 -Raw data contains 4 datasets (global_economy_indicators, global_leader_ideologies,military_spending_dataset,World Population and Unemployment Dataset) before preprocessing and the metadata file for global economic indicators dataset.
