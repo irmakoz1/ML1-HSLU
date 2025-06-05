@@ -34,8 +34,7 @@ This repository contains the analysis conducted for the ML1 course at HSLU. The 
  ┃ ┣ 📜yeojohnson_qqplot.png
  ┃ ┣ 📜y_test_enc.csv
  ┃ ┗ 📜y_train_enc.csv
- ┣ 📂preprocessing_scripts
- ┃ ┣ 📜dataset_processsing.R
+ ┣ 📂processing_script
  ┃ ┗ 📜new_data_merge.R
  ┣ 📂processed_data
  ┃ ┗ 📜new_data_with_count.csv
