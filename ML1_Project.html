@@ -14587,7 +14587,7 @@ GDP                                      0.9136      0.029     31.340      0.000
 <tr>
 <th>Variable</th>
 <th>Effect (exp(Coeff))</th>
-<th>Interpretation</th>
+<th>Corrected Interpretation (log-log model)</th>
 <th>Significance (P-value)</th>
 </tr>
 </thead>
@@ -14595,78 +14595,77 @@ GDP                                      0.9136      0.029     31.340      0.000
 <tr>
 <td><strong>Intercept</strong></td>
 <td>0.2672</td>
-<td>Baseline expected urban population when all predictors are at reference levels (no democracy, etc.)</td>
-<td>—</td>
+<td>Baseline expected urban population</td>
+<td>0.000 (significant)</td>
 </tr>
 <tr>
 <td><strong>Leader Ideology (rightist)</strong></td>
 <td>0.9755</td>
-<td>~2.45% lower urban population with rightists vs. centrist/leftist leaders</td>
+<td>Rightist leaders are associated with ~2.45% lower expected urban population compared to the centrist group</td>
 <td>0.031 (significant)</td>
 </tr>
 <tr>
 <td><strong>Democracy</strong></td>
 <td>1.0553</td>
-<td>~5.53% higher urban population in democracies</td>
+<td>Democracies are associated with ~5.53% higher expected urban population</td>
 <td>0.000 (significant)</td>
 </tr>
 <tr>
 <td><strong>Per Capita GNI</strong></td>
 <td>0.4875</td>
-<td>~51.25% decrease per unit increase; wealthier countries tend to have lower urban population growth</td>
+<td>A 1% increase in GNI per capita is associated with ~51.25% decrease in expected urban population</td>
 <td>0.000 (significant)</td>
 </tr>
 <tr>
 <td><strong>Construction Sector</strong></td>
 <td>0.9701</td>
-<td>~2.99% lower urban population per unit increase in construction, small but significant effect</td>
+<td>A 1% increase in construction is associated with ~2.99% decrease in expected urban population</td>
 <td>0.014 (significant)</td>
 </tr>
 <tr>
 <td><strong>Imports of Goods and Services</strong></td>
 <td>0.8546</td>
-<td>~14.54% decrease per unit increase; higher imports linked to lower urban population growth</td>
+<td>A 1% increase in imports is associated with ~14.54% decrease in expected urban population</td>
 <td>0.000 (significant)</td>
 </tr>
 <tr>
 <td><strong>Mining and Manufacturing Sector</strong></td>
 <td>1.2773</td>
-<td>~27.73% increase per unit increase; positive relationship with urban population growth</td>
+<td>A 1% increase is associated with ~27.73% increase in expected urban population</td>
 <td>0.000 (significant)</td>
 </tr>
 <tr>
 <td><strong>Military Expenditure</strong></td>
 <td>0.9575</td>
-<td>~4.25% decrease per unit increase; significant negative effect</td>
+<td>A 1% increase in military spending is associated with ~4.25% decrease in expected urban population</td>
 <td>0.000 (significant)</td>
 </tr>
 <tr>
 <td><strong>GDP</strong></td>
 <td>2.4940</td>
-<td>~149.40% increase per unit increase; strong positive link to urban population growth</td>
+<td>A 1% increase in GDP is associated with ~149.40% increase in expected urban population</td>
 <td>0.000 (significant)</td>
 </tr>
 <tr>
 <td><strong>Leader Ideology (leftist)</strong></td>
 <td>0.9929</td>
-<td>Small effect; statistically not significant</td>
+<td>Small and statistically insignificant effect relative to the centrist (baseline) group</td>
 <td>0.557 (not significant)</td>
 </tr>
 <tr>
 <td><strong>Agriculture, Hunting, and Fishing</strong></td>
 <td>0.9857</td>
-<td>No significant impact on urban population growth</td>
+<td>No significant impact of a 1% increase in this sector on expected urban population</td>
 <td>0.130 (not significant)</td>
 </tr>
 <tr>
 <td><strong>Transport, Storage, and Communication</strong></td>
 <td>0.9808</td>
-<td>Small, non-significant effect</td>
+<td>Small, statistically insignificant decrease per 1% increase in this sector</td>
 <td>0.281 (not significant)</td>
 </tr>
 </tbody>
 </table>
-<hr/>
 <h3 id="Summary">Summary<a class="anchor-link" href="#Summary">¶</a></h3><p>Urban population growth is more pronounced in wealthier countries (higher GDP) and those with more mining/manufacturing activity. Democracies tend to have slightly larger urban populations. Conversely, higher military spending, right wing leaders and imports correlate with reduced urban population growth. Agriculture, and interestingly transport seem to not have a meaningful relationship with Urban population.</p>
 </div>
 </div>
@@ -14693,7 +14692,7 @@ GDP                                      0.9136      0.029     31.340      0.000
 <div class="cell border-box-sizing text_cell rendered" id="cell-id=9d558bb6"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The residual plots show overdispersion and heteroscedasticity. Negative binomial might be a better approach. For the Negative binomial Model, alpha is calculated using MLE method from quasipoisson model using R (alpha value comes from there).</p>
+<p>The residual plots show overdispersion and heteroscedasticity. Negative binomial might be a better approach. For the Negative binomial Model, alpha (dispersion) is calculated using MLE method from quasipoisson model using R (alpha value comes from there).</p>
 </div>
 </div>
 </div>
@@ -14759,7 +14758,7 @@ GDP                                      0.6225      0.197      3.159      0.002
 <thead>
 <tr>
 <th>Variable</th>
-<th>Coefficient (exp)</th>
+<th>Coefficient (β)</th>
 <th>Interpretation</th>
 <th>Significant (P-value)</th>
 </tr>
@@ -14767,75 +14766,75 @@ GDP                                      0.6225      0.197      3.159      0.002
 <tbody>
 <tr>
 <td><strong>Intercept</strong></td>
-<td>exp(-0.9069) = 0.4049</td>
-<td>The baseline expected urban population.</td>
+<td>-0.9069</td>
+<td>Baseline expected log urban population</td>
 <td>No (0.219)</td>
 </tr>
 <tr>
+<td><strong>Leader Ideology: Leftist vs. Centrist</strong></td>
+<td>-0.0432</td>
+<td>Countries led by leftist leaders have ~4.3% <strong>lower</strong> expected urban population compared to centrist-led countries (not significant)</td>
+<td>No (0.703)</td>
+</tr>
+<tr>
+<td><strong>Leader Ideology: Rightist vs. Centrist</strong></td>
+<td>-0.0535</td>
+<td>Countries led by rightist leaders have ~5.4% <strong>lower</strong> expected urban population compared to centrist-led countries (not significant)</td>
+<td>No (0.640)</td>
+</tr>
+<tr>
+<td><strong>Democracy vs. Non-democracy</strong></td>
+<td>0.0948</td>
+<td>Democracies have ~9.5% <strong>higher</strong> expected urban population than non-democracies (not statistically significant)</td>
+<td>No (0.262)</td>
+</tr>
+<tr>
 <td><strong>Per Capita GNI</strong></td>
-<td>exp(-0.7498) = 0.4721</td>
-<td>A 1-unit increase is associated with a 52.79% decrease in expected urban population. Wealthier countries tend to have lower urban population growth.</td>
-<td><strong>0.000(significant)</strong></td>
-</tr>
-<tr>
-<td><strong>Mining &amp; Manufacturing Sector</strong></td>
-<td>exp(0.1836) = 1.2012</td>
-<td>A 1-unit increase is associated with a 20.12% increase in expected urban population. Suggests mining activity drives higher urban growth.</td>
-<td><strong>0.041 (significant)</strong></td>
-</tr>
-<tr>
-<td><strong>Transport, Storage &amp; Communication</strong></td>
-<td>exp(0.2557) = 1.2912</td>
-<td>A 1-unit increase is associated with a 29.12% increase in expected urban population. Indicates more investment in transport leads to greater urban population growth.</td>
-<td><strong>0.017 (significant)</strong></td>
-</tr>
-<tr>
-<td><strong>GDP</strong></td>
-<td>exp(0.6225) = 1.8647</td>
-<td>A 1-unit increase is associated with an 86.47% increase in expected urban population. Wealthier countries tend to have larger urban populations.</td>
-<td><strong>0.002 (significant)</strong></td>
-</tr>
-<tr>
-<td><strong>Leader Ideology (Leftist)</strong></td>
-<td>exp(-0.0432) = 0.9574</td>
-<td>No substantial evidence that leftist leadership affects urban population growth.</td>
-<td>0.703(not significant)</td>
-</tr>
-<tr>
-<td><strong>Leader Ideology (Rightist)</strong></td>
-<td>exp(-0.0535) = 0.9477</td>
-<td>No substantial evidence that rightist leadership affects urban population growth.</td>
-<td>0.640 (not significant)</td>
-</tr>
-<tr>
-<td><strong>Democracy</strong></td>
-<td>exp(0.0948) = 1.0995</td>
-<td>Democracies do not show a strong effect on urban population compared to non-democracies.</td>
-<td>0.26(not significant)</td>
+<td>-0.7498</td>
+<td>A 1% increase in GNI per capita is associated with a <strong>0.75% decrease</strong> in expected urban population</td>
+<td><strong>Yes (0.000)</strong></td>
 </tr>
 <tr>
 <td><strong>Agriculture, Hunting &amp; Fishing</strong></td>
-<td>exp(0.0002) = 1.0002</td>
-<td>Agriculture sector has no meaningful impact on urban population growth.</td>
-<td>0.998 (not significant)</td>
+<td>0.0002</td>
+<td>A 1% increase in agricultural sector size has <strong>no meaningful effect</strong> on urban population</td>
+<td>No (0.998)</td>
 </tr>
 <tr>
 <td><strong>Construction Sector</strong></td>
-<td>exp(-0.0017) = 0.9983</td>
-<td>Construction sector does not meaningfully relate to urban population growth in the model.</td>
-<td>0.982 (not significant)</td>
+<td>-0.0017</td>
+<td>A 1% increase in construction sector size has <strong>no meaningful effect</strong> on urban population</td>
+<td>No (0.982)</td>
 </tr>
 <tr>
 <td><strong>Imports of Goods and Services</strong></td>
-<td>exp(-0.1053) = 0.8994</td>
-<td>No clear evidence that imports are linked to changes in urban population growth.</td>
-<td>0.222 (not significant)</td>
+<td>-0.1053</td>
+<td>A 1% increase in imports is associated with a <strong>0.11% decrease</strong> in expected urban population</td>
+<td>No (0.222)</td>
+</tr>
+<tr>
+<td><strong>Mining &amp; Manufacturing Sector</strong></td>
+<td>0.1836</td>
+<td>A 1% increase in mining/manufacturing sector is associated with a <strong>0.18% increase</strong> in expected urban population</td>
+<td><strong>Yes (0.041)</strong></td>
+</tr>
+<tr>
+<td><strong>Transport, Storage &amp; Communication</strong></td>
+<td>0.2557</td>
+<td>A 1% increase in this sector is associated with a <strong>0.26% increase</strong> in expected urban population</td>
+<td><strong>Yes (0.017)</strong></td>
 </tr>
 <tr>
 <td><strong>Military Expenditure</strong></td>
-<td>exp(0.1170) = 1.1238</td>
-<td>Though the effect is positive, it does not have a strong relationship with urban population growth.</td>
-<td>0.189 (not significant)</td>
+<td>0.1170</td>
+<td>A 1% increase in military spending is associated with a <strong>0.12% increase</strong> in expected urban population</td>
+<td>No (0.189)</td>
+</tr>
+<tr>
+<td><strong>GDP</strong></td>
+<td>0.6225</td>
+<td>A 1% increase in GDP is associated with a <strong>0.62% increase</strong> in expected urban population</td>
+<td><strong>Yes (0.002)</strong></td>
 </tr>
 </tbody>
 </table>
@@ -16952,7 +16951,7 @@ weighted avg       0.88      0.88      0.88       570
 ✅ Partly — Richer countries were much more likely to be democracies (Binomial GLM showed 106× higher odds) and democracies tend to have lower military spending (GAM, estimate~ -0.199). Military spending and economic indicators have non-linear but significant relationships and having a leftist ideology significantly relates to lower military spending (GAM, estimate~-0.13)</br></p>
 </li>
 <li><p><strong>Leader Ideologies, Economy and Develeopment -&gt; Urbanization</strong><br>
-✅ Yes — A larger urban population was tied to centrist governments (SVM feature importance +12%). Though, urban population seem to have an interesting relationship with wealth. Urbanization and GDP follows a positive relationship (%86 increase), whereas with per capita GNI (%52 decrease) follows a negative relationship (GLM Poisson). This might mean that, even though the countries have bigger economies (high GDP), individuals with high salaries tend to prefer living in the countryside. In addition, urbanization was linked to transport sector growth.</br></p>
+✅ Yes — A larger urban population was associated with centrist governments (SVM feature importance +12%). Urban population shows an interesting relationship with economic indicators: a 1% increase in GDP is associated with about a 0.62% increase in expected urban population, while a 1% increase in per capita GNI is associated with approximately a 0.75% decrease (GLM Negative Binomial). This suggests that although countries with larger economies tend to be more urbanized, individuals with higher incomes may prefer living outside urban areas. Additionally, urbanization was positively linked to growth in the transport sector, indicating that investment in infrastructure supports urban population growth.</br></p>
 </li>
 <li><p><strong>Democracy and Military Spending</strong><br>
 ✅ Yes —Authoritarian regimes spend more on defense. A one-unit increase in military spending corresponds to a <strong>21% decrease</strong> in the odds of democracy (Binomial GLM).</br></p>
