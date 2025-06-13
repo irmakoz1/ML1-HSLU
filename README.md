@@ -19,21 +19,21 @@ This repository contains the analysis conducted for the ML1 course at HSLU. The 
 
 
 <pre> 📦ML1_report    
- ┣ 📂gam_R             # train-test data split from python (X_enc.csv,x_test_enc.csv,y_train_enc.csv,y_test_enc.csv), R script for GAM analysis and plots and summary tables to load in jupyter notebook
- ┃ ┣ 📜gam_check_output.txt
- ┃ ┣ 📜gam_model_summary.txt
+ ┣ 📂gam_R            
+ ┃ ┣ 📜gam_check_output.txt     # GAM output from R to load to jupyter notebook
+ ┃ ┣ 📜gam_model_summary.txt    # GAM output from R to load to jupyter notebook
  ┃ ┣ 📜gam_r.R         #  R script for GAM analysis
- ┃ ┣ 📜grid_plot.png
- ┃ ┣ 📜RESIDUAL_DIAG.png
- ┃ ┣ 📜X_enc.csv
- ┃ ┣ 📜x_test_enc.csv
- ┃ ┣ 📜YEOJOHNSONTRANSFORMED.png
- ┃ ┣ 📜YEOJOHNSON_check_output.txt
- ┃ ┣ 📜yeojohnson_histogram.png
- ┃ ┣ 📜YEOJOHNSON_model_summary.txt
- ┃ ┣ 📜yeojohnson_qqplot.png
- ┃ ┣ 📜y_test_enc.csv
- ┃ ┗ 📜y_train_enc.csv
+ ┃ ┣ 📜grid_plot.png   # GAM output from R to load to jupyter notebook
+ ┃ ┣ 📜RESIDUAL_DIAG.png      # GAM output from R to load to jupyter notebook
+ ┃ ┣ 📜X_enc.csv   #train-test data split from python
+ ┃ ┣ 📜x_test_enc.csv   #train-test data split from python
+ ┃ ┣ 📜YEOJOHNSONTRANSFORMED.png   # GAM output from R to load to jupyter notebook
+ ┃ ┣ 📜YEOJOHNSON_check_output.txt  # GAM output from R to load to jupyter notebook
+ ┃ ┣ 📜yeojohnson_histogram.png     # GAM output from R to load to jupyter notebook
+ ┃ ┣ 📜YEOJOHNSON_model_summary.txt  # GAM output from R to load to jupyter notebook
+ ┃ ┣ 📜yeojohnson_qqplot.png        # GAM output from R to load to jupyter notebook
+ ┃ ┣ 📜y_test_enc.csv      #train-test data split from python
+ ┃ ┗ 📜y_train_enc.csv    #train-test data split from python
  ┣ 📂processing_script
  ┃ ┗ 📜new_data_merge.R      # Merges all 4 datasets and renames and cleans them.
  ┣ 📂processed_data
