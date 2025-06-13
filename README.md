@@ -18,11 +18,11 @@ This repository contains the analysis conducted for the ML1 course at HSLU. The 
 **The folder structure:**
 
 
-<pre> 📦ML1_report
- ┣ 📂gam_R
+<pre> 📦ML1_report    
+ ┣ 📂gam_R             # train-test data split from python (X_enc.csv,x_test_enc.csv,y_train_enc.csv,y_test_enc.csv), R script for GAM analysis and plots and summary tables to load in jupyter notebook
  ┃ ┣ 📜gam_check_output.txt
  ┃ ┣ 📜gam_model_summary.txt
- ┃ ┣ 📜gam_r.R
+ ┃ ┣ 📜gam_r.R         #  R script for GAM analysis
  ┃ ┣ 📜grid_plot.png
  ┃ ┣ 📜RESIDUAL_DIAG.png
  ┃ ┣ 📜X_enc.csv
@@ -35,35 +35,22 @@ This repository contains the analysis conducted for the ML1 course at HSLU. The 
  ┃ ┣ 📜y_test_enc.csv
  ┃ ┗ 📜y_train_enc.csv
  ┣ 📂processing_script
- ┃ ┗ 📜new_data_merge.R
+ ┃ ┗ 📜new_data_merge.R      # Merges all 4 datasets and renames and cleans them.
  ┣ 📂processed_data
- ┃ ┗ 📜new_data_with_count.csv
- ┣ 📂raw_data
+ ┃ ┗ 📜new_data_with_count.csv   #The processed data file that we used in our analysis.
+ ┣ 📂raw_data                     # Raw data for 4 datasets and metadata for GEM
  ┃ ┣ 📜GEM_Metadatadescriptions.xlsx
  ┃ ┣ 📜global_economy_indicators.csv
  ┃ ┣ 📜global_leader_ideologies.csv
  ┃ ┣ 📜military_spending_dataset.csv
  ┃ ┗ 📜World Population and Unemployment Dataset (1960-2023).csv
  ┣ 📂template
- ┃ ┣ 📜convert_html.txt
- ┃ ┗ 📜hide_code.tpl
- ┣ 📜ML1_Project.html
- ┣ 📜ML1_Report.ipynb
+ ┃ ┣ 📜convert_html.txt             # HTML conversion command for .ipynb file
+ ┃ ┗ 📜hide_code.tpl                #hide code utility for jupyter notebook
+ ┣ 📜ML1_Project.html               # Main report file
+ ┣ 📜ML1_Report.ipynb               # The markdown file used to generate the HTML output
  ┗ 📜README.md </pre>
 
-
--The file ML1_Project.html is the main report file.
-
--The file ML1_Report.ipnyb is the markdown file used to generate the HTML output.
-
--Preprocessing scripts folder contains new_data_merge.R that merges all 4 datasets and renames and cleans them.
--Processed data folder contains the processed data file (new_data_with_count.csv) that we used in our analysis.
-
--Raw data contains 4 datasets (global_economy_indicators, global_leader_ideologies,military_spending_dataset,World Population and Unemployment Dataset) before preprocessing and the metadata file for global economic indicators dataset.
-
--gam_R folder contains, train-test data split from python (X_enc.csv,x_test_enc.csv,y_train_enc.csv,y_test_enc.csv) for loading in R, R script for GAM analysis (gam_r.R) and related plots and summary tables to load in jupyter notebook.
-
--Template folder contains hide_code utility for jupyter notebook output and convert_html.txt which includes the code to convert the jupyter notebook to html.
 
 ---------------------------------------------------------------------------
 **Team Contibutions:**
